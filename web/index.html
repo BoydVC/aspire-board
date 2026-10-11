@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aspire Copa Board · U14G</title>
+<meta name="theme-color" content="#0f172a">
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="badge" aria-hidden="true"><svg viewBox="0 0 44 44" width="40" height="40"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5eead4"/><stop offset="1" stop-color="#0d9488"/></linearGradient></defs><circle cx="22" cy="22" r="20" fill="url(#ag)" stroke="#0f172a" stroke-width="2.5"/><circle cx="22" cy="22" r="12" fill="none" stroke="#0f172a" stroke-width="2"/><circle cx="22" cy="22" r="3.5" fill="#0f172a"/><path d="M22 4 V10 M22 34 V40 M4 22 H10 M34 22 H40" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <div>
+      <h1>Aspire Copa Board</h1>
+      <p class="sub">U14G tactics · teal &amp; navy practice board · formations, drills &amp; coach notes</p>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span class="pill">ASPIRE · U14G · COPA</span>
+    <span class="pill soft">offline · private</span>
+    <button id="btnHelp" class="ghost" title="How to use">❓ Help</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="boardcol">
+    <div class="toolbar" id="toolbar" role="toolbar" aria-label="Tools">
+      <button data-tool="move" class="tool on" title="Move players and ball (M)">✋<span>Move</span></button>
+      <button data-tool="pass" class="tool" title="Pass arrow, solid (P)"><i class="ico pass"></i><span>Pass</span></button>
+      <button data-tool="run" class="tool" title="Run arrow, dashed (R)"><i class="ico run"></i><span>Run</span></button>
+      <button data-tool="dribble" class="tool" title="Dribble arrow, wavy (D)"><i class="ico dribble"></i><span>Dribble</span></button>
+      <button data-tool="erase" class="tool" title="Eraser: tap or swipe over arrows (E)">🧽<span>Erase</span></button>
+      <span class="sep"></span>
+      <button id="btnUndo" class="act" title="Undo (Ctrl+Z)">↶<span>Undo</span></button>
+      <button id="btnClearArrows" class="act" title="Remove arrows on this frame">✖<span>Clear arrows</span></button>
+      <button id="btnReset" class="act" title="Put players back in formation">⟲<span>Reset</span></button>
+    </div>
+    <div class="legend" aria-label="Arrow legend">
+      <span><i class="lg pass"></i> Pass</span>
+      <span><i class="lg run"></i> Run</span>
+      <span><i class="lg dribble"></i> Dribble</span>
+      <span class="lg-hint">Drag from a player to snap the start</span>
+    </div>
+    <div class="pitchwrap" id="pitchwrap">
+      <canvas id="pitch" aria-label="Soccer pitch tactics board"></canvas>
+      <div class="playtitle" id="playTitle"></div>
+      <div class="pitchbadge" aria-hidden="true">ASPIRE</div>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="transport">
+        <button id="btnFirst" title="First frame">⏮</button>
+        <button id="btnPrev" title="Step back">◀</button>
+        <button id="btnPlay" class="big" title="Play / pause (Space)">▶</button>
+        <button id="btnNext" title="Step forward">▶|</button>
+        <label class="speed" title="Playback speed">Speed
+          <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+        </label>
+      </div>
+      <div class="frames">
+        <div id="frameChips" class="chips"></div>
+        <button id="btnAddFrame" class="add" title="Copy this frame to a new step">＋ Frame</button>
+        <button id="btnDelFrame" class="del" title="Delete this frame">🗑</button>
+      </div>
+      <div class="hint" id="frameHint">Frame 1 of 1. Arrange players, then tap ＋ Frame and move them again to build a play.</div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <div class="card hero">
+      <h2>Team setup</h2>
+      <div class="seg" id="formatSeg" role="radiogroup" aria-label="Format">
+        <button data-format="7">7v7</button><button data-format="9" class="on">9v9</button><button data-format="11">11v11</button>
+      </div>
+      <p class="note">U14 often plays 9v9 or 11v11 — pick what matches the field. Optional 7v7 for small-sided work. The board makes no league claims.</p>
+      <div class="row2">
+        <label>Aspire <select id="homeForm"></select></label>
+        <label>Away <select id="awayForm"></select></label>
+      </div>
+      <div class="formviz" id="formViz" aria-label="Formation preview"></div>
+      <div class="checks">
+        <label><input type="checkbox" id="chkAway" checked> Show away team</label>
+        <label><input type="checkbox" id="chkRoles"> Show positions (not numbers)</label>
+        <label><input type="checkbox" id="chkGhost" checked> Ghost of last frame</label>
+      </div>
+      <p class="venue-hint">Venue hint only: St Mary’s HS Annapolis — add your own session details below. No schedule invented here.</p>
+    </div>
+
+    <div class="card">
+      <h2>Drills &amp; plays <span class="tag">generic examples</span></h2>
+      <p class="note">Generic teaching examples for youth soccer. Not from any real team or roster. Load one, then press ▶.</p>
+      <div id="presetList" class="presets"></div>
+    </div>
+
+    <div class="card notes-card">
+      <h2>Coach crib <span class="tag soft">your notes</span></h2>
+      <p class="note">Empty templates stored only on this device. Fill in what you need — no invented roster, times, or scores.</p>
+      <div id="coachCrib" class="coach-crib"></div>
+      <div class="crib-actions">
+        <button id="btnSaveCrib" class="primary">💾 Save notes</button>
+        <button id="btnClearCrib" class="act">Clear all</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>My plays</h2>
+      <div class="saverow">
+        <input id="playName" type="text" maxlength="40" placeholder="Name this play">
+        <button id="btnSave" class="primary">💾 Save</button>
+      </div>
+      <div id="savedList" class="saved"></div>
+      <label class="notes">Coach notes <textarea id="notes" rows="3" placeholder="What should each player look for?"></textarea></label>
+      <div class="exports">
+        <button id="btnExportJson">⬇ Export JSON</button>
+        <button id="btnImportJson">⬆ Import JSON</button>
+        <button id="btnExportPng">🖼 Save PNG</button>
+        <button id="btnNew">✨ New board</button>
+        <input id="fileImport" type="file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="foot">
+  <span>Aspire Copa Board · U14G · TokenMax build Sun Oct 11</span>
+  <span>Everything stays on this device · localhost port 4282</span>
+</footer>
+
+<div id="help" class="modal" hidden>
+  <div class="modalbox">
+    <h2>How to use Aspire Copa Board</h2>
+    <ol>
+      <li><b>Pick a format</b> (9v9 or 11v11 for U14; 7v7 optional) and a formation for each team.</li>
+      <li><b>✋ Move:</b> drag any player or the ball with a finger or the mouse.</li>
+      <li><b>Pass</b> draws a solid arrow, <b>Run</b> a dashed arrow, <b>Dribble</b> a wavy one. Drag on the pitch to draw.</li>
+      <li><b>🧽 Erase:</b> tap or swipe across an arrow to remove it. <b>↶ Undo</b> takes back the last change.</li>
+      <li><b>Build a play:</b> set up frame 1, tap <b>＋ Frame</b>, move players to where they go next and repeat. Press <b>▶</b> to watch it.</li>
+      <li><b>Coach crib</b> is empty templates you fill yourself (saved in this browser). Schedule / logistics says “add your own notes” — nothing is invented.</li>
+      <li><b>Save</b> named plays on this device, export JSON to share, or save a PNG picture of the board.</li>
+    </ol>
+    <p class="note">Keys: Space play/pause · ←/→ step · Ctrl+Z undo · M/P/R/D/E tools.<br>Everything stays on this device. No account and no internet needed.</p>
+    <button id="btnHelpClose" class="primary">Got it</button>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>/*__APP__*/</script>
+</body>
+</html>
