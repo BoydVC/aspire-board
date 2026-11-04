@@ -1,6 +1,6 @@
 # Aspire Copa Board ⚽
 
-**A polished youth soccer tactics board for Charlotte’s U14G Aspire (Copa)** — teal & navy branding, distinct from the Hornets green/gold board. Drag Aspire (teal) and away (rose) players around a properly marked pitch. Draw solid pass arrows, dashed run arrows and wavy dribble arrows, then build a play frame by frame and press ▶ to watch. Coach crib is empty localStorage templates — **no invented schedule, roster, scores, or coach names**. One offline HTML file.
+**A polished youth soccer tactics board for Alex’s U14G Aspire (Copa)** — teal & navy branding, distinct from the Hornets green/gold board. Drag Aspire (teal) and away (rose) players around a properly marked pitch. Draw solid pass arrows, dashed run arrows and wavy dribble arrows, then build a play frame by frame and press ▶ to watch. Coach crib is empty localStorage templates — **no invented schedule, roster, scores, or coach names**. One offline HTML file.
 
 * **Open it:** double-click `dist/aspire-board.html`, or run `./run.sh` → http://127.0.0.1:4282/
 * **Best screenshot:** `screenshots/00-best-home.png`
@@ -11,7 +11,7 @@
 * **Move / Draw / Erase / Undo:** drag players and ball; Pass (solid), Run (dashed teal), Dribble (wavy lilac); eraser + Ctrl+Z.
 * **Animate a play:** ＋ Frame copies the board; ▶ plays with eased movement, ghost trails, 0.5×–2× speed.
 * **Drill library (8 generic):** Give-and-go, Overlap, Switch of play, Pressing trap, Corner near-post, Goal kick build-out, 3v2 attack, Defend the box — all labelled “Generic example”.
-* **Coach crib:** empty templates (session focus, warm-up, drills, cool-down, schedule/logistics) saved in localStorage. Schedule area says “add your own notes”. Venue hint only: St Mary’s HS Annapolis.
+* **Coach crib:** empty templates (session focus, warm-up, drills, cool-down, schedule/logistics) saved in localStorage. Schedule area says “add your own notes”. Venue hint only: Northside Academy.
 * **Save & share:** named plays in localStorage, Export/Import JSON, Save PNG. Everything stays on the device.
 * **Layouts:** desktop side panel; phone turns the pitch vertical. Help overlay + keyboard shortcuts.
 
